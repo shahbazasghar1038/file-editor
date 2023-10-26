@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from "react";
+import "./App.css";
+import JoditEditor from "jodit-react";
+
+import Reader from "./Reader.jsx";
 
 function App() {
+  const [content, setContent] = useState("");
+
+  const editor = useRef(null);
+
+  console.log(content, "content");
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1> File Editor</h1>
+
+      <JoditEditor
+        ref={editor}
+        value={content}
+        tabIndex={1} // tabIndex of textarea
+        onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+        onChange={(newContent) => {}}
+      />
+
+      <Reader pdfText={content} setPdfText={setContent} />
     </div>
   );
 }
